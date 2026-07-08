@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buono Regalo Digitale Amazon | Amazon.it</title>
+  <link rel="icon" href="amazon_icon.png" type="image/png" />
+  <style>
+    /* ── Reset ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Amazon Ember", "Helvetica Neue", Arial, sans-serif;
+      font-size: 14px;
+      color: #0f1111;
+      background: #fff;
+    }
+    a { color: #007185; text-decoration: none; }
+    a:hover { color: #c7511f; text-decoration: underline; }
+
+    /* ══════════════════════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════════════════════ */
+    .amz-nav {
+      background: #131921;
+      color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-main {
+      display: flex;
+      align-items: stretch;
+      padding: 0 10px;
+      height: 60px;
+      gap: 4px;
+    }
+
+    /* logo */
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      padding: 8px 6px;
+      border: 2px solid transparent;
+      border-radius: 2px;
+      cursor: pointer;
+      flex-shrink: 0;
+      gap: 2px;
+    }
+    .nav-logo:hover { border-color: #fff; }
+    .nav-logo svg {
+      height: 33px;
+      width: auto;
+      fill: #fff;
+    }
+    /* keep the orange arrow paths orange */
+    .nav-logo svg .orange { fill: #ff9900 !important; }
+    .nav-logo-it {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ff9900;
+      align-self: flex-end;
+      margin-bottom: 6px;
+      margin-left: 1px;
+    }
+
+    /* deliver */
+    .nav-deliver {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 0 8px;
+      border: 2px solid transparent;
+      border-radius: 2px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .nav-deliver:hover { border-color: #fff; }
+    .nav-deliver .pin { font-size: 17px; color: #ccc; }
+    .nav-deliver .txt { display: flex; flex-direction: column; justify-content: center; }
+    .nav-deliver .top { font-size: 12px; color: #ccc; }
+    .nav-deliver .bot { font-size: 13px; font-weight: 700; white-space: nowrap; }
+
+    /* search */
+    .nav-search {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 7px 6px;
+      min-width: 0;
+    }
+    .nav-search select {
+      background: #f3f3f3;
+      border: none;
+      border-right: 1px solid #cdcdcd;
+      padding: 0 6px;
+      height: 100%;
+      font-size: 12px;
+      color: #333;
+      cursor: pointer;
+      outline: none;
+      flex-shrink: 0;
+    }
+    .nav-search input {
+      flex: 1;
+      border: none;
+      padding: 0 10px;
+      height: 100%;
+      font-size: 14px;
+      outline: none;
+      min-width: 0;
+    }
+    .nav-search button {
+      background: #febd69;
+      border: none;
+      height: 100%;
+      padding: 0 12px;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-search button:hover { background: #f3a847; }
+
+    /* right items */
+    .nav-right {
+      display: flex;
+      align-items: stretch;
+      flex-shrink: 0;
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8px 8px;
+      border: 2px solid transparent;
+      border-radius: 2px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .nav-item:hover { border-color: #fff; }
+    .nav-item .top { font-size: 12px; color: #ccc; }
+    .nav-item .bot { font-size: 13px; font-weight: 700; }
+    .nav-item.cart {
+      flex-direction: row;
+      align-items: flex-end;
+      gap: 3px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .nav-item.cart .cart-count {
+      font-size: 18px;
+      font-weight: 900;
+      color: #f08804;
+      line-height: 1;
+    }
+    .nav-item.cart .cart-label { font-size: 13px; align-self: flex-end; }
+
+    /* subnav */
+    .sub-nav {
+      background: #232f3e;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 0 8px;
+      height: 38px;
+      overflow: hidden;
+    }
+    .sub-nav a {
+      color: #fff;
+      font-size: 13px;
+      padding: 0 10px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+    .sub-nav a:hover { border-color: #fff; text-decoration: none; }
+    .sub-nav a.all { font-weight: 700; font-size: 13.5px; }
+
+    /* ══════════════════════════════════════════════════════════
+       BREADCRUMB
+    ══════════════════════════════════════════════════════════ */
+    .breadcrumb {
+      padding: 8px 18px;
+      font-size: 12px;
+      color: #565959;
+    }
+    .breadcrumb a { color: #007185; }
+
+    /* ══════════════════════════════════════════════════════════
+       MAIN LAYOUT
+    ══════════════════════════════════════════════════════════ */
+    .main-wrap {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 10px 18px 40px;
+      display: grid;
+      grid-template-columns: 340px 1fr 280px;
+      grid-template-rows: auto;
+      gap: 20px;
+    }
+
+    /* ── Image column ───────────────────────────────────────── */
+    .col-image {
+      grid-column: 1;
+    }
+    .img-main {
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .img-thumbs {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .img-thumb {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border: 2px solid #FF9900;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    /* ── Details column ─────────────────────────────────────── */
+    .col-details {
+      grid-column: 2;
+    }
+    .product-title {
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+    .product-title .not {
+      color: #b12704;
+      font-style: italic;
+      font-weight: 700;
+    }
+    .sold-by {
+      font-size: 13px;
+      margin-bottom: 8px;
+      color: #565959;
+    }
+    .stars-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+    .stars { color: #FF9900; font-size: 16px; }
+    .rating-count { color: #007185; }
+
+    .detail-divider {
+      border: none;
+      border-top: 1px solid #e7e7e7;
+      margin: 12px 0;
+    }
+
+    /* price */
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .price-label { font-size: 13px; color: #565959; }
+    .price-main {
+      font-size: 28px;
+      font-weight: 400;
+      color: #b12704;
+    }
+    .price-main sup { font-size: 14px; vertical-align: super; }
+    .prime-line {
+      font-size: 13px;
+      color: #007185;
+      margin-bottom: 10px;
+    }
+    .prime-line .prime-badge {
+      background: #00a8e0;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 5px;
+      border-radius: 3px;
+      letter-spacing: .02em;
+    }
+
+    /* about this item */
+    .section-head {
+      font-size: 16px;
+      font-weight: 700;
+      margin: 18px 0 8px;
+    }
+    .bullet-list {
+      padding-left: 18px;
+    }
+    .bullet-list li {
+      margin-bottom: 6px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .bullet-list li .notreal {
+      color: #b12704;
+      font-weight: 700;
+    }
+
+    /* names */
+    .names-section { margin: 16px 0; }
+    .names-label {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .names-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .name-chip {
+      background: #131921;
+      color: #FF9900;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 20px;
+    }
+
+    /* personal message */
+    .personal-msg {
+      background: #fdf3e3;
+      border-left: 4px solid #FF9900;
+      padding: 14px 16px;
+      margin: 14px 0;
+      font-size: 14px;
+      line-height: 1.7;
+      border-radius: 0 4px 4px 0;
+    }
+
+    /* ── Buy box column ─────────────────────────────────────── */
+    .col-buy {
+      grid-column: 3;
+    }
+    .buy-box {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 18px;
+      font-size: 14px;
+    }
+    .buy-price {
+      font-size: 28px;
+      margin-bottom: 4px;
+      color: #b12704;
+    }
+    .buy-price sup { font-size: 14px; vertical-align: super; }
+    .buy-prime {
+      font-size: 13px;
+      color: #007185;
+      margin-bottom: 10px;
+    }
+    .buy-delivery {
+      font-size: 13px;
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+    .buy-delivery strong { color: #007600; }
+    .buy-stock {
+      font-size: 16px;
+      color: #007600;
+      font-weight: 400;
+      margin-bottom: 14px;
+    }
+    .buy-qty {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+    .buy-qty select {
+      border: 1px solid #888;
+      border-radius: 8px;
+      padding: 5px 8px;
+      background: #f0f2f2;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .btn-cart {
+      width: 100%;
+      background: #FFD814;
+      border: 1px solid #FCD200;
+      border-radius: 20px;
+      padding: 9px 10px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+    .btn-cart:hover { background: #F7CA00; }
+    .btn-buy {
+      width: 100%;
+      background: #FFA41C;
+      border: 1px solid #FF8F00;
+      border-radius: 20px;
+      padding: 9px 10px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-bottom: 14px;
+    }
+    .btn-buy:hover { background: #FA8900; }
+    .buy-meta {
+      font-size: 12px;
+      color: #565959;
+      line-height: 1.8;
+    }
+    .buy-meta a { color: #007185; }
+
+    /* secure transaction badge */
+    .secure-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      color: #565959;
+      margin-bottom: 10px;
+    }
+    .lock-icon { font-size: 14px; }
+
+    /* ══════════════════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════════════════ */
+    .amz-footer {
+      background: #232f3e;
+      margin-top: 30px;
+    }
+    .footer-back-top {
+      background: #37475a;
+      color: #fff;
+      text-align: center;
+      padding: 14px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .footer-back-top:hover { background: #485769; }
+    .footer-cols {
+      display: flex;
+      gap: 20px;
+      padding: 30px 60px 20px;
+      flex-wrap: wrap;
+    }
+    .footer-col { flex: 1; min-width: 140px; }
+    .footer-col h4 {
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul li a { color: #ddd; font-size: 13px; }
+    .footer-col ul li a:hover { color: #fff; text-decoration: none; }
+    .footer-logo {
+      display: flex;
+      justify-content: center;
+      padding: 20px 0 12px;
+    }
+    .footer-logo svg { height: 32px; width: auto; fill: #fff; }
+    .footer-logo svg .orange { fill: #ff9900 !important; }
+    .footer-bottom {
+      border-top: 1px solid #3a4553;
+      padding: 16px 60px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .footer-bottom a {
+      color: #ddd;
+      font-size: 12px;
+    }
+    .footer-copy {
+      text-align: center;
+      color: #777;
+      font-size: 12px;
+      padding: 8px 0 20px;
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════════════════ */
+
+    /* ── Tablet (≤ 1024px): 3-col → 2-col ──────────────────── */
+    @media (max-width: 1024px) {
+      .main-wrap {
+        grid-template-columns: 280px 1fr;
+        grid-template-rows: auto auto;
+      }
+      .col-image   { grid-column: 1; grid-row: 1 / 3; }
+      .col-details { grid-column: 2; grid-row: 1; }
+      .col-buy     { grid-column: 2; grid-row: 2; }
+      .nav-deliver { display: none; }
+      .footer-cols { padding: 20px; }
+      .footer-bottom { padding: 16px 20px; }
+    }
+
+    /* ── Mobile (≤ 768px): single column ────────────────────── */
+    @media (max-width: 768px) {
+      /* --- nav ------------------------------------------------ */
+      .nav-main { height: 50px; padding: 0 8px; gap: 2px; }
+      .nav-deliver { display: none; }
+      .nav-search { margin: 6px 4px; }
+      .nav-search select { display: none; }
+      /* hide Account/Resi labels, keep only cart */
+      .nav-item:not(.cart) { display: none; }
+      .nav-item.cart { padding: 0 6px; }
+
+      /* --- sub-nav: horizontal scroll, no visible scrollbar -- */
+      .sub-nav {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .sub-nav::-webkit-scrollbar { display: none; }
+
+      /* --- breadcrumb ----------------------------------------- */
+      .breadcrumb {
+        padding: 6px 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* --- main grid: stacked, Amazon-style order:
+             1) image  2) buy box  3) details/description ------- */
+      .main-wrap {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        padding: 0 0 30px;
+        gap: 0;
+      }
+      .col-image   { grid-column: 1; grid-row: 2; padding: 10px 12px 6px; }
+      .col-buy     { grid-column: 1; grid-row: 3; }
+      .col-details { grid-column: 1; grid-row: 1; padding: 0 12px; }
+
+      /* --- image ---------------------------------------------- */
+      .img-main {
+        max-height: 300px;
+        width: 100%;
+        object-fit: contain;
+        background: #f8f8f8;
+      }
+      .img-thumbs { display: none; }
+
+      /* --- product title -------------------------------------- */
+      .product-title { font-size: 18px; margin-top: 8px; }
+      .stars-row { flex-wrap: wrap; }
+
+      /* --- buy box: full-bleed, no border radius -------------- */
+      .buy-box {
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+        padding: 14px 16px;
+      }
+      .buy-price { font-size: 26px; }
+
+      /* --- bigger touch targets ------------------------------ */
+      .btn-cart, .btn-buy {
+        padding: 12px 10px;
+        font-size: 15px;
+        min-height: 44px;
+      }
+
+      /* --- price in details col ------------------------------ */
+      .price-main { font-size: 24px; }
+
+      /* --- personal message ---------------------------------- */
+      .personal-msg { font-size: 13px; }
+
+      /* --- footer -------------------------------------------- */
+      .footer-cols {
+        flex-direction: column;
+        padding: 0;
+        gap: 0;
+      }
+      .footer-col {
+        padding: 14px 20px;
+        border-bottom: 1px solid #3a4553;
+        min-width: 100%;
+      }
+      .footer-col:last-child { border-bottom: none; }
+      .footer-bottom {
+        padding: 14px 16px;
+        gap: 10px;
+        justify-content: flex-start;
+      }
+    }
+
+    /* ── Small phones (≤ 400px) ─────────────────────────────── */
+    @media (max-width: 400px) {
+      .nav-logo svg { height: 26px; }
+      .product-title { font-size: 16px; }
+      .section-head { font-size: 15px; }
+      .bullet-list li, .personal-msg { font-size: 13px; }
+      .name-chip { font-size: 12px; padding: 4px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════════════════════ -->
+<header class="amz-nav">
+  <div class="nav-main">
+
+    <!-- Logo -->
+    <div class="nav-logo">
+      <!-- Amazon logo SVG — text paths: inherit fill (white in nav),
+           orange paths: path8, path10 (arrow/smile) -->
+      <svg viewBox="0 0 603 182" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path class="orange" d="m 374.00642,142.18404 c -34.99948,25.79739 -85.72909,39.56123 -129.40634,39.56123 -61.24255,0 -116.37656,-22.65135 -158.08757,-60.32496 -3.2771,-2.96252 -0.34083,-6.9999 3.59171,-4.69283 45.01431,26.19064 100.67269,41.94697 158.16623,41.94697 38.774689,0 81.4295,-8.02237 120.6499,-24.67006 5.92501,-2.51683 10.87999,3.88009 5.08607,8.17965"/>
+        <path class="orange" d="m 388.55678,125.53635 c -4.45688,-5.71527 -29.57261,-2.70033 -40.84585,-1.36327 -3.43442,0.41947 -3.95874,-2.56925 -0.86517,-4.71905 20.00346,-14.07844 52.82696,-10.01483 56.65462,-5.2958 3.82764,4.74526 -0.99624,37.64741 -19.79373,53.35128 -2.88385,2.41195 -5.63662,1.12734 -4.35198,-2.07113 4.2209,-10.53917 13.68519,-34.16054 9.20211,-39.90203"/>
+        <path d="M 348.49744,20.06598 V 6.38079 c 0,-2.07113 1.57301,-3.46062 3.46062,-3.46062 h 61.26875 c 1.96628,0 3.53929,1.41571 3.53929,3.46062 v 11.71893 c -0.0262,1.96626 -1.67788,4.53551 -4.61418,8.59912 l -31.74859,45.32893 c 11.79759,-0.28837 24.25059,1.46814 34.94706,7.49802 2.41195,1.36327 3.06737,3.35575 3.25089,5.32203 V 99.4506 c 0,1.99248 -2.20222,4.32576 -4.5093,3.1198 -18.84992,-9.88376 -43.887,-10.95865 -64.72939,0.10487 -2.12356,1.15354 -4.35199,-1.15354 -4.35199,-3.14602 V 85.66054 c 0,-2.22843 0.0262,-6.02989 2.25463,-9.41186 l 36.78224,-52.74829 h -32.01076 c -1.96626,0 -3.53927,-1.38948 -3.53927,-3.43441"/>
+        <path d="m 124.99883,105.45424 h -18.64017 c -1.78273,-0.13107 -3.19845,-1.46813 -3.32954,-3.17224 V 6.61676 c 0,-1.91383 1.59923,-3.43442 3.59171,-3.43442 h 17.38176 c 1.80898,0.0786 3.25089,1.46814 3.38199,3.19845 v 12.50545 h 0.34082 c 4.53551,-12.08598 13.05597,-17.7226 24.53896,-17.7226 11.66649,0 18.95477,5.63662 24.19814,17.7226 4.5093,-12.08598 14.76008,-17.7226 25.74495,-17.7226 7.81262,0 16.35931,3.22467 21.57646,10.46052 5.89879,8.04857 4.69281,19.74128 4.69281,29.99208 l -0.0262,60.37739 c 0,1.91383 -1.59923,3.46061 -3.59171,3.46061 h -18.61397 c -1.86138,-0.13107 -3.35574,-1.62543 -3.35574,-3.46061 V 51.29025 c 0,-4.03739 0.36702,-14.10466 -0.52434,-17.93233 -1.38949,-6.42311 -5.55797,-8.23209 -10.95865,-8.23209 -4.5093,0 -9.22833,3.01494 -11.14216,7.83885 -1.91383,4.8239 -1.73031,12.89867 -1.73031,18.32557 v 50.70338 c 0,1.91383 -1.59923,3.46061 -3.59171,3.46061 h -18.61395 c -1.88761,-0.13107 -3.35576,-1.62543 -3.35576,-3.46061 L 152.946,51.29025 c 0,-10.67025 1.75651,-26.37415 -11.48298,-26.37415 -13.39682,0 -12.87248,15.31063 -12.87248,26.37415 v 50.70338 c 0,1.91383 -1.59923,3.46061 -3.59171,3.46061"/>
+        <path d="m 469.51439,1.16364 c 27.65877,0 42.62858,23.75246 42.62858,53.95427 0,29.17934 -16.54284,52.32881 -42.62858,52.32881 -27.16066,0 -41.94697,-23.75246 -41.94697,-53.35127 0,-29.78234 14.96983,-52.93181 41.94697,-52.93181 m 0.15729,19.53156 c -13.73761,0 -14.60278,18.71881 -14.60278,30.38532 0,11.69271 -0.18352,36.65114 14.44549,36.65114 14.44548,0 15.12712,-20.13452 15.12712,-32.40403 0,-8.07477 -0.34082,-17.72257 -2.779,-25.3779 -2.09735,-6.65906 -6.26581,-9.25453 -12.19083,-9.25453"/>
+        <path d="M 548.00762,105.45424 H 529.4461 c -1.86141,-0.13107 -3.35577,-1.62543 -3.35577,-3.46061 l -0.0262,-95.69149 c 0.1573,-1.75653 1.7041,-3.1198 3.59171,-3.1198 h 17.27691 c 1.62543,0.0786 2.96249,1.17976 3.32954,2.67412 v 14.62899 h 0.3408 c 5.21717,-13.0822 12.53165,-19.32181 25.40412,-19.32181 8.36317,0 16.51662,3.01494 21.75999,11.27324 4.87633,7.65532 4.87633,20.5278 4.87633,29.78233 v 60.22011 c -0.20973,1.67786 -1.75653,3.01492 -3.59169,3.01492 h -18.69262 c -1.70411,-0.13107 -3.11982,-1.38948 -3.30332,-3.01492 V 50.47753 c 0,-10.46052 1.20597,-25.77117 -11.66651,-25.77117 -4.5355,0 -8.70399,3.04117 -10.77512,7.65532 -2.62167,5.84637 -2.96249,11.66651 -2.96249,18.11585 v 51.5161 c -0.0262,1.91383 -1.65166,3.46061 -3.64414,3.46061"/>
+        <!-- 'a' glyph mirrored via use — replicated as a second 'a' path shifted -->
+        <path d="M 55.288261,59.75829 V 55.7209 c -13.475471,0 -27.711211,2.88385 -27.711211,18.77125 0,8.04857 4.16847,13.50169 11.32567,13.50169 5.24337,0 9.93618,-3.22467 12.8987,-8.46805 3.670341,-6.44935 3.486841,-12.50544 3.486841,-19.7675 m 18.79747,45.43378 c -1.23219,1.10111 -3.01495,1.17976 -4.40444,0.4457 -6.18716,-5.1385 -7.28828,-7.52423 -10.69647,-12.42678 -10.224571,10.4343 -17.460401,13.55409 -30.726141,13.55409 -15.67768,0 -27.89471,-9.67401 -27.89471,-29.04824 0,-15.12713 8.20587,-25.43035 19.87236,-30.46398 10.1197,-4.45688 24.25058,-5.24337 35.051931,-6.47556 v -2.41195 c 0,-4.43066 0.34082,-9.67403 -2.25465,-13.50167 -2.280881,-3.43442 -6.632861,-4.85013 -10.460531,-4.85013 -7.10475,0 -13.44924,3.64414 -14.99603,11.19459 -0.31461,1.67789 -1.5468,3.32955 -3.22467,3.4082 L 6.26276,32.67628 C 4.74218,32.33548 3.0643,31.10327 3.48377,28.76999 7.65225,6.85271 27.44596,0.24605 45.16856,0.24605 c 9.071011,0 20.921021,2.41195 28.078221,9.28076 9.07104,8.46804 8.20587,19.7675 8.20587,32.06321 v 29.04826 c 0,8.73022 3.61794,12.55786 7.02613,17.27691 1.20597,1.67786 1.46814,3.69656 -0.05244,4.95497 -3.80144,3.17225 -10.56538,9.07104 -14.28819,12.37436 l -0.05242,-0.0525"/>
+        <!-- second 'a' (shifted +244.36719) -->
+        <path d="M 299.655451,59.75829 V 55.7209 c -13.475471,0 -27.711211,2.88385 -27.711211,18.77125 0,8.04857 4.16847,13.50169 11.32567,13.50169 5.24337,0 9.93618,-3.22467 12.8987,-8.46805 3.670341,-6.44935 3.486841,-12.50544 3.486841,-19.7675 m 18.79747,45.43378 c -1.23219,1.10111 -3.01495,1.17976 -4.40444,0.4457 -6.18716,-5.1385 -7.28828,-7.52423 -10.69647,-12.42678 -10.224571,10.4343 -17.460401,13.55409 -30.726141,13.55409 -15.67768,0 -27.89471,-9.67401 -27.89471,-29.04824 0,-15.12713 8.20587,-25.43035 19.87236,-30.46398 10.1197,-4.45688 24.25058,-5.24337 35.051931,-6.47556 v -2.41195 c 0,-4.43066 0.34082,-9.67403 -2.25465,-13.50167 -2.280881,-3.43442 -6.632861,-4.85013 -10.460531,-4.85013 -7.10475,0 -13.44924,3.64414 -14.99603,11.19459 -0.31461,1.67789 -1.5468,3.32955 -3.22467,3.4082 l -13.39683,-1.41571 c -1.52058,-0.34082 -3.19845,-1.57301 -2.77898,-3.90629 4.16848,-21.91728 23.96219,-28.52394 41.68479,-28.52394 9.071011,0 20.921021,2.41195 28.078221,9.28076 9.07104,8.46804 8.20587,19.7675 8.20587,32.06321 v 29.04826 c 0,8.73022 3.61794,12.55786 7.02613,17.27691 1.20597,1.67786 1.46814,3.69656 -0.05244,4.95497 -3.80144,3.17225 -10.56538,9.07104 -14.28819,12.37436 l -0.05242,-0.0525"/>
+      </svg>
+      <span class="nav-logo-it">.it</span>
+    </div>
+
+    <!-- Deliver to -->
+    <div class="nav-deliver">
+      <span class="pin">📍</span>
+      <div class="txt">
+        <div class="top">Consegna a</div>
+        <div class="bot">Alessandro</div>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="nav-search">
+      <select aria-label="categoria di ricerca">
+        <option>Tutte le categorie</option>
+        <option selected>Buoni Regalo</option>
+        <option>Informatica</option>
+        <option>Elettronica</option>
+      </select>
+      <input type="text" value="buono regalo per Alessandro" aria-label="cerca" readonly />
+      <button aria-label="cerca">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="#333"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
+      </button>
+    </div>
+
+    <!-- Right items -->
+    <div class="nav-right">
+      <div class="nav-item">
+        <div class="top">Ciao, Alessandro</div>
+        <div class="bot">Account e liste &#9660;</div>
+      </div>
+      <div class="nav-item">
+        <div class="top">Resi</div>
+        <div class="bot">e ordini</div>
+      </div>
+      <div class="nav-item cart">
+        <svg width="28" height="28" viewBox="0 0 36 36" fill="#fff" style="flex-shrink:0">
+          <path d="M4 4h2.6l1 4.8L10 24h18l3-14H8.4"/>
+          <circle cx="13" cy="28" r="2"/><circle cx="25" cy="28" r="2"/>
+        </svg>
+        <span class="cart-count">0</span>
+        <span class="cart-label">Carrello</span>
+      </div>
+    </div>
+
+  </div><!-- /nav-main -->
+
+  <!-- Sub-nav -->
+  <nav class="sub-nav" aria-label="Navigazione principale">
+    <a href="#" class="all">&#9776;&nbsp;Tutti</a>
+    <a href="#">Offerte del Giorno</a>
+    <a href="#">Servizio Clienti</a>
+    <a href="#">Buoni Regalo</a>
+    <a href="#">Bestseller</a>
+    <a href="#">Informatica</a>
+    <a href="#">Elettronica</a>
+    <a href="#">Prime</a>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════
+     BREADCRUMB
+═══════════════════════════════════════════════════════════ -->
+<div class="breadcrumb">
+  <a href="#">Amazon.it</a> ›
+  <a href="#">Buoni Regalo</a> ›
+  <a href="#">Buoni Regalo Digitali</a> ›
+  <span style="color:#0f1111">Buono Regalo Digitale per Alessandro</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MAIN CONTENT
+═══════════════════════════════════════════════════════════ -->
+<main>
+  <div class="main-wrap">
+
+    <!-- ── Image column ──────────────────────────────────────── -->
+    <div class="col-image">
+      <img src="gift_card_example.webp" alt="Amazon Gift Card" class="img-main" />
+      <div class="img-thumbs">
+        <img src="gift_card_example.webp" alt="vista 1" class="img-thumb" />
+      </div>
+    </div>
+
+    <!-- ── Details column ────────────────────────────────────── -->
+    <div class="col-details">
+
+      <p class="sold-by">
+        Visita lo store di <a href="#">I Tuoi Amici</a>
+      </p>
+
+      <h1 class="product-title">
+        Questo <span class="not">(non)</span> è un Buono Regalo Amazon –
+        Contributo per un nuovo PC
+      </h1>
+
+      <!-- Stars -->
+      <div class="stars-row">
+        <span class="stars">★★★★★</span>
+        <a href="#" class="rating-count">5 valutazioni</a>
+        <span style="color:#565959">|</span>
+        <a href="#">Domande e risposte dei clienti (1)</a>
+      </div>
+
+      <hr class="detail-divider" />
+
+      <!-- Price -->
+      <div class="price-row">
+        <span class="price-label">Prezzo:</span>
+        <span class="price-main"><sup>€</sup>500,00</span>
+      </div>
+      <div class="prime-line">
+        <span class="prime-badge">prime</span>&nbsp;
+        Spedizione GRATUITA
+      </div>
+
+      <hr class="detail-divider" />
+
+      <!-- About -->
+      <div class="section-head">Caratteristiche principali</div>
+      <ul class="bullet-list">
+        <li>Già in mano tua, non serve inserire codici</li>
+        <li>Utilizzabile su <span class="notreal">qualsiasi sito o negozio tu voglia</li>
+        <li>Nessuna data di scadenza</li>
+      </ul>
+
+      <hr class="detail-divider" />
+
+      <!-- Personal message -->
+      <div class="section-head">Messaggio dei mittenti</div>
+      <div class="personal-msg">
+        <!-- PLACEHOLDER: inserire un messaggio personalizzato qui -->
+        <em>Placeholder: inserire un messaggio personalizzato qui.</em>
+      </div>
+
+      <hr class="detail-divider" />
+
+      <!-- Names -->
+      <div class="names-section">
+        <div class="names-label">Con affetto da:</div>
+        <div class="names-grid">
+          <!-- PLACEHOLDER: replace these chips with the real names -->
+          <span class="name-chip">Marta</span>
+          <span class="name-chip">Marta</span>
+          <span class="name-chip">Ettore</span>
+          <span class="name-chip">Chiara</span>
+          <span class="name-chip">Gianluca</span>
+          <span class="name-chip">Sara</span>
+          <span class="name-chip">Giacomo</span>
+          <span class="name-chip">Giulia</span>
+          <span class="name-chip">Annalinda</span>
+          <span class="name-chip">Mary e Aldo</span>
+          <span class="name-chip">Roby e Massimo</span>
+          <span class="name-chip">Olimpia e Pierluigi</span>
+          <span class="name-chip">Paola</span>
+          <span class="name-chip">Gabry, Guido e Pamy</span>
+          <span class="name-chip">Paolo</span>
+        </div>
+      </div>
+
+    </div><!-- /col-details -->
+
+    <!-- ── Buy box column ─────────────────────────────────────── -->
+    <div class="col-buy">
+      <div class="buy-box">
+        <div class="buy-price"><sup>€</sup>500,00</div>
+        <div class="buy-prime">
+          <span style="background:#00a8e0;color:#fff;font-size:11px;font-weight:700;padding:2px 5px;border-radius:3px;">prime</span>
+          &nbsp;Consegna GRATUITA
+        </div>
+        <div class="buy-delivery">
+          Ricevi <strong>oggi</strong>, 11 luglio<br>
+          <span style="color:#565959">Ordina entro 2&nbsp;ore e&nbsp;47&nbsp;minuti</span>
+        </div>
+        <div class="buy-stock">✓ Disponibile</div>
+
+        <div class="buy-qty">
+          <label for="qty">Qtà:</label>
+          <select id="qty" aria-label="quantità">
+            <option>1</option>
+          </select>
+        </div>
+
+        <button class="btn-cart">Aggiungi al carrello</button>
+        <button class="btn-buy">Acquista ora</button>
+
+        <div class="secure-badge">
+          <span class="lock-icon">🔒</span>
+          <span>Transazione sicura</span>
+        </div>
+
+        <div class="buy-meta">
+          Venduto da: <a href="#">I tuoi amici</a><br>
+          Spedito da: <a href="#">Analzone</a><br>
+          <br>
+          <a href="#">Aggiungi alla lista dei desideri</a><br>
+          <a href="#">Condividi</a>
+        </div>
+      </div>
+    </div><!-- /col-buy -->
+
+  </div><!-- /main-wrap -->
+</main>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════ -->
+<footer class="amz-footer">
+  <div class="footer-back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    Torna in cima
+  </div>
+
+  <div class="footer-cols">
+    <div class="footer-col">
+      <h4>Scopri di più su Amazon</h4>
+      <ul>
+        <li><a href="#">Lavora con noi</a></li>
+        <li><a href="#">Amazon Science</a></li>
+        <li><a href="#">Sala stampa</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Guadagna con Amazon</h4>
+      <ul>
+        <li><a href="#">Vendi su Amazon</a></li>
+        <li><a href="#">Programma affiliati</a></li>
+        <li><a href="#">Self-publishing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Metodi di pagamento</h4>
+      <ul>
+        <li><a href="#">Carta di credito</a></li>
+        <li><a href="#">Buoni regalo</a></li>
+        <li><a href="#">Amazon Pay</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Assistenza</h4>
+      <ul>
+        <li><a href="#">Servizio clienti</a></li>
+        <li><a href="#">Resi e rimborsi</a></li>
+        <li><a href="#">Traccia spedizione</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Footer logo -->
+  <div class="footer-logo">
+    <svg viewBox="0 0 603 182" xmlns="http://www.w3.org/2000/svg">
+      <path class="orange" d="m 374.00642,142.18404 c -34.99948,25.79739 -85.72909,39.56123 -129.40634,39.56123 -61.24255,0 -116.37656,-22.65135 -158.08757,-60.32496 -3.2771,-2.96252 -0.34083,-6.9999 3.59171,-4.69283 45.01431,26.19064 100.67269,41.94697 158.16623,41.94697 38.774689,0 81.4295,-8.02237 120.6499,-24.67006 5.92501,-2.51683 10.87999,3.88009 5.08607,8.17965"/>
+      <path class="orange" d="m 388.55678,125.53635 c -4.45688,-5.71527 -29.57261,-2.70033 -40.84585,-1.36327 -3.43442,0.41947 -3.95874,-2.56925 -0.86517,-4.71905 20.00346,-14.07844 52.82696,-10.01483 56.65462,-5.2958 3.82764,4.74526 -0.99624,37.64741 -19.79373,53.35128 -2.88385,2.41195 -5.63662,1.12734 -4.35198,-2.07113 4.2209,-10.53917 13.68519,-34.16054 9.20211,-39.90203"/>
+      <path d="M 348.49744,20.06598 V 6.38079 c 0,-2.07113 1.57301,-3.46062 3.46062,-3.46062 h 61.26875 c 1.96628,0 3.53929,1.41571 3.53929,3.46062 v 11.71893 c -0.0262,1.96626 -1.67788,4.53551 -4.61418,8.59912 l -31.74859,45.32893 c 11.79759,-0.28837 24.25059,1.46814 34.94706,7.49802 2.41195,1.36327 3.06737,3.35575 3.25089,5.32203 V 99.4506 c 0,1.99248 -2.20222,4.32576 -4.5093,3.1198 -18.84992,-9.88376 -43.887,-10.95865 -64.72939,0.10487 -2.12356,1.15354 -4.35199,-1.15354 -4.35199,-3.14602 V 85.66054 c 0,-2.22843 0.0262,-6.02989 2.25463,-9.41186 l 36.78224,-52.74829 h -32.01076 c -1.96626,0 -3.53927,-1.38948 -3.53927,-3.43441"/>
+      <path d="m 124.99883,105.45424 h -18.64017 c -1.78273,-0.13107 -3.19845,-1.46813 -3.32954,-3.17224 V 6.61676 c 0,-1.91383 1.59923,-3.43442 3.59171,-3.43442 h 17.38176 c 1.80898,0.0786 3.25089,1.46814 3.38199,3.19845 v 12.50545 h 0.34082 c 4.53551,-12.08598 13.05597,-17.7226 24.53896,-17.7226 11.66649,0 18.95477,5.63662 24.19814,17.7226 4.5093,-12.08598 14.76008,-17.7226 25.74495,-17.7226 7.81262,0 16.35931,3.22467 21.57646,10.46052 5.89879,8.04857 4.69281,19.74128 4.69281,29.99208 l -0.0262,60.37739 c 0,1.91383 -1.59923,3.46061 -3.59171,3.46061 h -18.61397 c -1.86138,-0.13107 -3.35574,-1.62543 -3.35574,-3.46061 V 51.29025 c 0,-4.03739 0.36702,-14.10466 -0.52434,-17.93233 -1.38949,-6.42311 -5.55797,-8.23209 -10.95865,-8.23209 -4.5093,0 -9.22833,3.01494 -11.14216,7.83885 -1.91383,4.8239 -1.73031,12.89867 -1.73031,18.32557 v 50.70338 c 0,1.91383 -1.59923,3.46061 -3.59171,3.46061 h -18.61395 c -1.88761,-0.13107 -3.35576,-1.62543 -3.35576,-3.46061 L 152.946,51.29025 c 0,-10.67025 1.75651,-26.37415 -11.48298,-26.37415 -13.39682,0 -12.87248,15.31063 -12.87248,26.37415 v 50.70338 c 0,1.91383 -1.59923,3.46061 -3.59171,3.46061"/>
+      <path d="m 469.51439,1.16364 c 27.65877,0 42.62858,23.75246 42.62858,53.95427 0,29.17934 -16.54284,52.32881 -42.62858,52.32881 -27.16066,0 -41.94697,-23.75246 -41.94697,-53.35127 0,-29.78234 14.96983,-52.93181 41.94697,-52.93181 m 0.15729,19.53156 c -13.73761,0 -14.60278,18.71881 -14.60278,30.38532 0,11.69271 -0.18352,36.65114 14.44549,36.65114 14.44548,0 15.12712,-20.13452 15.12712,-32.40403 0,-8.07477 -0.34082,-17.72257 -2.779,-25.3779 -2.09735,-6.65906 -6.26581,-9.25453 -12.19083,-9.25453"/>
+      <path d="M 548.00762,105.45424 H 529.4461 c -1.86141,-0.13107 -3.35577,-1.62543 -3.35577,-3.46061 l -0.0262,-95.69149 c 0.1573,-1.75653 1.7041,-3.1198 3.59171,-3.1198 h 17.27691 c 1.62543,0.0786 2.96249,1.17976 3.32954,2.67412 v 14.62899 h 0.3408 c 5.21717,-13.0822 12.53165,-19.32181 25.40412,-19.32181 8.36317,0 16.51662,3.01494 21.75999,11.27324 4.87633,7.65532 4.87633,20.5278 4.87633,29.78233 v 60.22011 c -0.20973,1.67786 -1.75653,3.01492 -3.59169,3.01492 h -18.69262 c -1.70411,-0.13107 -3.11982,-1.38948 -3.30332,-3.01492 V 50.47753 c 0,-10.46052 1.20597,-25.77117 -11.66651,-25.77117 -4.5355,0 -8.70399,3.04117 -10.77512,7.65532 -2.62167,5.84637 -2.96249,11.66651 -2.96249,18.11585 v 51.5161 c -0.0262,1.91383 -1.65166,3.46061 -3.64414,3.46061"/>
+      <path d="M 55.288261,59.75829 V 55.7209 c -13.475471,0 -27.711211,2.88385 -27.711211,18.77125 0,8.04857 4.16847,13.50169 11.32567,13.50169 5.24337,0 9.93618,-3.22467 12.8987,-8.46805 3.670341,-6.44935 3.486841,-12.50544 3.486841,-19.7675 m 18.79747,45.43378 c -1.23219,1.10111 -3.01495,1.17976 -4.40444,0.4457 -6.18716,-5.1385 -7.28828,-7.52423 -10.69647,-12.42678 -10.224571,10.4343 -17.460401,13.55409 -30.726141,13.55409 -15.67768,0 -27.89471,-9.67401 -27.89471,-29.04824 0,-15.12713 8.20587,-25.43035 19.87236,-30.46398 10.1197,-4.45688 24.25058,-5.24337 35.051931,-6.47556 v -2.41195 c 0,-4.43066 0.34082,-9.67403 -2.25465,-13.50167 -2.280881,-3.43442 -6.632861,-4.85013 -10.460531,-4.85013 -7.10475,0 -13.44924,3.64414 -14.99603,11.19459 -0.31461,1.67789 -1.5468,3.32955 -3.22467,3.4082 L 6.26276,32.67628 C 4.74218,32.33548 3.0643,31.10327 3.48377,28.76999 7.65225,6.85271 27.44596,0.24605 45.16856,0.24605 c 9.071011,0 20.921021,2.41195 28.078221,9.28076 9.07104,8.46804 8.20587,19.7675 8.20587,32.06321 v 29.04826 c 0,8.73022 3.61794,12.55786 7.02613,17.27691 1.20597,1.67786 1.46814,3.69656 -0.05244,4.95497 -3.80144,3.17225 -10.56538,9.07104 -14.28819,12.37436 l -0.05242,-0.0525"/>
+      <path d="M 299.655451,59.75829 V 55.7209 c -13.475471,0 -27.711211,2.88385 -27.711211,18.77125 0,8.04857 4.16847,13.50169 11.32567,13.50169 5.24337,0 9.93618,-3.22467 12.8987,-8.46805 3.670341,-6.44935 3.486841,-12.50544 3.486841,-19.7675 m 18.79747,45.43378 c -1.23219,1.10111 -3.01495,1.17976 -4.40444,0.4457 -6.18716,-5.1385 -7.28828,-7.52423 -10.69647,-12.42678 -10.224571,10.4343 -17.460401,13.55409 -30.726141,13.55409 -15.67768,0 -27.89471,-9.67401 -27.89471,-29.04824 0,-15.12713 8.20587,-25.43035 19.87236,-30.46398 10.1197,-4.45688 24.25058,-5.24337 35.051931,-6.47556 v -2.41195 c 0,-4.43066 0.34082,-9.67403 -2.25465,-13.50167 -2.280881,-3.43442 -6.632861,-4.85013 -10.460531,-4.85013 -7.10475,0 -13.44924,3.64414 -14.99603,11.19459 -0.31461,1.67789 -1.5468,3.32955 -3.22467,3.4082 l -13.39683,-1.41571 c -1.52058,-0.34082 -3.19845,-1.57301 -2.77898,-3.90629 4.16848,-21.91728 23.96219,-28.52394 41.68479,-28.52394 9.071011,0 20.921021,2.41195 28.078221,9.28076 9.07104,8.46804 8.20587,19.7675 8.20587,32.06321 v 29.04826 c 0,8.73022 3.61794,12.55786 7.02613,17.27691 1.20597,1.67786 1.46814,3.69656 -0.05244,4.95497 -3.80144,3.17225 -10.56538,9.07104 -14.28819,12.37436 l -0.05242,-0.0525"/>
+    </svg>
+  </div>
+
+  <div class="footer-bottom">
+    <a href="#">Condizioni d'uso</a>
+    <a href="#">Privacy</a>
+    <a href="#">Cookie</a>
+    <a href="#">Annunci pubblicitari</a>
+    <a href="#">Accessibilità</a>
+  </div>
+  <p class="footer-copy">© 2026, Ettore (e Claude Sonnet 4.6, gentilmente offerto da WK)</p>
+</footer>
+
+</body>
+</html>

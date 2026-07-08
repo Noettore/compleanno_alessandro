@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Casa di Riposo Villa Serena – Brochure</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #e8e4dc;
+      font-family: 'Lato', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      gap: 40px;
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       BROCHURE (A5 landscape for a tri-fold feel)
+    ══════════════════════════════════════════════════════════ */
+    .brochure {
+      width: 210mm;
+      background: url('casa_riposo.jpg') center 40% / cover no-repeat;
+      box-shadow: 0 6px 32px rgba(0,0,0,.22);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid #c9bfa8;
+      position: relative;
+    }
+    .brochure::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(250, 248, 244, 0.60);
+      z-index: 0;
+    }
+    .br-header, .ribbon, .br-body, .br-footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Top banner ─────────────────────────────────────────── */
+    .br-header {
+      background: #4a7c59;
+      color: #fff;
+      padding: 14px 24px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .br-header .facility-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: .02em;
+      line-height: 1.15;
+    }
+    .br-header .facility-name span {
+      display: block;
+      font-size: .65rem;
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      opacity: .85;
+      margin-top: 2px;
+    }
+    .br-header .floral {
+      font-size: 1.9rem;
+      opacity: .9;
+      flex-shrink: 0;
+    }
+    .br-header .accred {
+      font-size: .58rem;
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      opacity: .75;
+      text-align: right;
+      line-height: 1.6;
+      flex-shrink: 0;
+    }
+
+    /* ── Colour ribbon ──────────────────────────────────────── */
+    .ribbon {
+      height: 5px;
+      background: linear-gradient(90deg, #c8a951 0%, #8db07a 40%, #4a7c59 100%);
+    }
+
+    /* ── Main body ──────────────────────────────────────────── */
+    .br-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      flex: 1;
+    }
+
+    /* shared column styles */
+    .br-col {
+      padding: 18px 20px;
+      border-right: 1px solid #ddd5c4;
+      position: relative;
+    }
+    .br-col:last-child { border-right: none; }
+
+    /* ── Col 1: welcome blurb ───────────────────────────────── */
+    .col-welcome .tagline {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: #4a7c59;
+      line-height: 1.35;
+      margin-bottom: 10px;
+    }
+    .col-welcome p {
+      font-size: .72rem;
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+    .col-welcome .recipient-box {
+      margin-top: 12px;
+      background: #eef4eb;
+      border-left: 3px solid #4a7c59;
+      padding: 8px 10px;
+      font-size: .7rem;
+      color: #3a3a3a;
+      line-height: 1.6;
+    }
+    .col-welcome .recipient-box strong {
+      font-size: .85rem;
+      color: #2d5e3a;
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* ── Col 2: services ────────────────────────────────────── */
+    .col-services .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: .85rem;
+      font-weight: 700;
+      color: #2d5e3a;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 10px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #c8a951;
+    }
+    .service-list {
+      list-style: none;
+      margin-bottom: 14px;
+    }
+    .service-list li {
+      font-size: .8rem;
+      color: #444;
+      padding: 4px 0;
+      border-bottom: 1px dotted #d5cbb8;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      line-height: 1.4;
+    }
+    .service-list li::before {
+      content: '✦';
+      color: #c8a951;
+      font-size: .6rem;
+      flex-shrink: 0;
+    }
+    .highlight-box {
+      background: #4a7c59;
+      color: #fff;
+      padding: 8px 10px;
+      font-size: .68rem;
+      line-height: 1.6;
+      font-style: italic;
+      text-align: center;
+      margin-top: 4px;
+    }
+    .highlight-box strong {
+      display: block;
+      font-size: .82rem;
+      font-family: 'Playfair Display', serif;
+      font-style: normal;
+      margin-bottom: 2px;
+    }
+
+    /* ── Col 3: QR + contact ────────────────────────────────── */
+    .col-qr {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .col-qr .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: .85rem;
+      font-weight: 700;
+      color: #2d5e3a;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 2px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #c8a951;
+      width: 100%;
+      text-align: center;
+    }
+    .qr-wrapper {
+      border: 2px solid #4a7c59;
+      padding: 6px;
+      background: #fff;
+    }
+    #qr-canvas {
+      display: block;
+      width: 140px;
+      height: 140px;
+      image-rendering: pixelated;
+    }
+    .qr-caption {
+      font-size: .58rem;
+      color: #777;
+      text-align: center;
+      line-height: 1.5;
+    }
+    .contact-block {
+      width: 100%;
+      font-size: .65rem;
+      color: #444;
+      line-height: 1.9;
+    }
+    .contact-block .contact-line {
+      display: flex;
+      align-items: baseline;
+      gap: 5px;
+    }
+    .contact-block .icon { color: #4a7c59; flex-shrink: 0; }
+    .contact-block .divider {
+      border-top: 1px dotted #c9bfa8;
+      margin: 6px 0;
+    }
+
+    /* ── Footer strip ───────────────────────────────────────── */
+    .br-footer {
+      background: #3b6347;
+      color: #d4e8d4;
+      font-size: .6rem;
+      padding: 7px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: .04em;
+    }
+    .br-footer .fine {
+      font-style: italic;
+      opacity: .7;
+      font-size: .55rem;
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       URL CONFIG PANEL (hidden on print)
+    ══════════════════════════════════════════════════════════ */
+    .instructions {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.10);
+      padding: 24px 28px;
+      max-width: 500px;
+      width: 100%;
+    }
+    .instructions h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #2d5e3a;
+    }
+    .instructions label {
+      font-size: .85rem;
+      color: #555;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .url-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .url-row input {
+      flex: 1;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 7px 10px;
+      font-size: .88rem;
+      color: #131921;
+    }
+    .url-row button {
+      background: #4a7c59;
+      border: none;
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-weight: 700;
+      font-size: .85rem;
+      cursor: pointer;
+      color: #fff;
+    }
+    .url-row button:hover { background: #3b6347; }
+    .instructions .note {
+      font-size: .75rem;
+      color: #888;
+      line-height: 1.5;
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       PRINT
+    ══════════════════════════════════════════════════════════ */
+    @media print {
+      body { background: none; padding: 0; gap: 0; }
+      .brochure { box-shadow: none; width: 100%; }
+      .instructions { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ Brochure ════════════════════════════════════════════════ -->
+<div class="brochure">
+
+  <!-- Header -->
+  <div class="br-header">
+    <div class="facility-name">
+      Villa Serena
+      <span>Casa di Riposo &amp; Soggiorno Assistito</span>
+    </div>
+    <div class="accred">
+      ⭐⭐⭐⭐⭐ su Nonno Maps<br>
+      📞 Numero Verde: 800-VECCHIO
+    </div>
+  </div>
+  <div class="ribbon"></div>
+
+  <!-- Three-column body -->
+  <div class="br-body">
+
+    <!-- Col 1: Welcome -->
+    <div class="br-col col-welcome">
+      <p class="tagline">
+        "Perché invecchiare con gli amici
+        quando puoi farlo… DA SOLO?!"
+      </p>
+      <p>
+        Caro Alessandro, i tuoi amici ti vogliono
+        così bene che hanno pensato al tuo <em>futuro</em>.
+        Un futuro sereno. Tranquillo. Assistito.
+        Con il corrimano in bagno.
+      </p>
+      <p>
+        Qui da noi <strong>non sei solo un ospite</strong>:
+        rimani anche un grande scassa cazzo!
+        (con orari di visita 9-9:15, solo il lunedì).
+      </p>
+      <div class="recipient-box">
+        <strong>SCHEDA PRE-AMMISSIONE</strong><br>
+        Nominativo: <strong>Alessandro Franchini</strong><br>
+        Età anagrafica: 40 anni<br>
+        Età percepita: 75 anni circa<br>
+        Stato: <em>preoccupante ma gestibile</em><br>
+        Camera: Letto C, ala "Tramonto"
+      </div>
+    </div>
+
+    <!-- Col 2: Services -->
+    <div class="br-col col-services">
+      <div class="section-title">✨ I Nostri Servizi Premium ✨</div>
+      <ul class="service-list">
+        <li>Assistenza medica h24 (per placare la tua ipocondria)</li>
+        <li>Fisioterapia & ginnastica dolce (un toccasana per le ginocchia)</li>
+        <li>Burraco, tre sette e briscola (senza ammicchi, che rischi la paralisi)</li>
+        <li>Pasti caldi e bevande fredde (con toilette entro i 3 metri)</li>
+        <li>Giardino adatto a carrozzine e deambulatori (perfetto per il futuro)</li>
+        <li>Wi-Fi lento (e che non prende in bagno)</li>
+        <li>Pisolino 14:00-16:00 (<em>obbligatorio</em>)</li>
+        <li>TV su Rete 4 tutto il giorno (chiaramente a volume altissimo)</li>
+      </ul>
+    </div>
+
+    <!-- Col 3: QR + offer -->
+    <div class="br-col col-qr">
+      <div class="section-title">Maggiori Info</div>
+      <div class="qr-wrapper">
+        <canvas id="qr-canvas"></canvas>
+      </div>
+      <div class="highlight-box">
+        <strong>🎂 OFFERTA COMPLEANNO 🎂</strong>
+        Primo mese GRATIS!<br>
+        Pantofole in omaggio<br>
+        <strong>Scannerizza il QR per<br>finalizzare l'iscrizione</strong>
+      </div>
+    </div>
+
+  </div><!-- /br-body -->
+
+  <!-- Footer -->
+  <div class="ribbon"></div>
+  <div class="br-footer">
+    <span>Villa Serena S.r.l. - "Dove ogni tramonto è bellissimo" ™</span>
+    <span class="fine">Buon compleanno Alessandro!! 🎁🎂</span>
+  </div>
+
+</div>
+<!-- ══ /brochure ══════════════════════════════════════════════ -->
+
+
+<!-- ══ URL config panel (hidden on print) ════════════════════ -->
+<div class="instructions">
+  <h3>🔗 Imposta l'URL del QR code</h3>
+  <label for="url-input">
+    Incolla qui l'URL dove hai pubblicato <code>index.html</code>:
+  </label>
+  <div class="url-row">
+    <input id="url-input" type="url"
+           placeholder="https://tuonome.github.io/compleanno-ale/"
+           value="https://PLACEHOLDER.example.com/compleanno-ale/" />
+    <button onclick="updateQR()">Aggiorna QR</button>
+  </div>
+  <p class="note">
+    Dopo aver impostato l'URL corretto e visto comparire il QR, usa
+    <strong>File → Stampa</strong> (o Ctrl+P) per stampare solo la brochure
+    — il pannello di configurazione sparirà automaticamente.
+  </p>
+</div>
+<!-- ══ /panel ════════════════════════════════════════════════ -->
+
+
+<!--
+  QR code generator — qrcode.js (MIT, CDN)
+  https://github.com/davidshimjs/qrcodejs
+-->
+<script src="qrcode.min.js"></script>
+
+<script>
+  // We use a plain canvas + qrcode.js so it works offline too
+  var qrObj = null;
+
+  function buildQR(url) {
+    var container = document.createElement('div');
+    // qrcodejs renders into a div with an <img> or <canvas>
+    qrObj = new QRCode(container, {
+      text: url,
+      width: 280,
+      height: 280,
+      colorDark: "#131921",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.M
+    });
+    // Give the lib a tick to render, then copy to our canvas
+    setTimeout(function () {
+      var src = container.querySelector('canvas') || container.querySelector('img');
+      var dest = document.getElementById('qr-canvas');
+      var ctx  = dest.getContext('2d');
+      dest.width  = 280;
+      dest.height = 280;
+      if (src.tagName === 'CANVAS') {
+        ctx.drawImage(src, 0, 0, 280, 280);
+      } else {
+        // img fallback
+        var img = new Image();
+        img.onload = function () { ctx.drawImage(img, 0, 0, 280, 280); };
+        img.src = src.src;
+      }
+    }, 100);
+  }
+
+  function updateQR() {
+    var url = document.getElementById('url-input').value.trim();
+    if (!url) return;
+    // Clear canvas
+    var dest = document.getElementById('qr-canvas');
+    var ctx  = dest.getContext('2d');
+    dest.width = dest.height = 280;
+    ctx.clearRect(0, 0, 180, 180);
+    buildQR(url);
+  }
+
+  // Build on first load with the placeholder
+  window.addEventListener('DOMContentLoaded', function () {
+    updateQR();
+  });
+</script>
+
+</body>
+</html>
