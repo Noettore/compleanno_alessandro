@@ -209,18 +209,49 @@
     /* ── Image column ───────────────────────────────────────── */
     .col-image {
       grid-column: 1;
+      min-width: 0;
     }
     .img-main {
       width: 100%;
       border: 1px solid #ddd;
       border-radius: 4px;
     }
+    .img-thumbs-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      gap: 4px;
+    }
+    .thumb-arrow {
+      flex-shrink: 0;
+      background: rgba(255,255,255,.9);
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      color: #333;
+      box-shadow: 0 1px 4px rgba(0,0,0,.15);
+      transition: background .15s, color .15s;
+    }
+    .thumb-arrow:hover { background: #FF9900; color: #fff; border-color: #FF9900; }
     .img-thumbs {
+      flex: 1;
       display: flex;
       gap: 8px;
-      margin-top: 10px;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
+    .img-thumbs::-webkit-scrollbar { display: none; }
     .img-thumb {
+      flex-shrink: 0;
       width: 60px;
       height: 60px;
       object-fit: cover;
@@ -239,6 +270,7 @@
     /* ── Details column ─────────────────────────────────────── */
     .col-details {
       grid-column: 2;
+      min-width: 0;
     }
     .product-title {
       font-size: 22px;
@@ -355,6 +387,7 @@
     /* ── Buy box column ─────────────────────────────────────── */
     .col-buy {
       grid-column: 3;
+      min-width: 0;
     }
     .buy-box {
       border: 1px solid #ddd;
@@ -733,7 +766,9 @@
     <!-- ── Image column ──────────────────────────────────────── -->
     <div class="col-image">
       <img src="img/ale1.jpg" alt="Alessandro" class="img-main" id="img-main-display" style="cursor:pointer" />
-      <div class="img-thumbs" id="img-thumbs">
+      <div class="img-thumbs-wrap">
+        <button class="thumb-arrow" onclick="scrollThumbs(-1)" aria-label="Scorri sinistra">&#8249;</button>
+        <div class="img-thumbs" id="img-thumbs">
         <img src="img/ale1.jpg" alt="vista 1" class="img-thumb slide-thumb" onclick="selectThumb(0,true)" style="object-fit:cover;object-position:center top" />
         <img src="img/ale2.jpg" alt="vista 2" class="img-thumb slide-thumb" onclick="selectThumb(1,true)" style="object-fit:cover;object-position:center top" />
         <img src="img/ale3.jpg" alt="vista 3" class="img-thumb slide-thumb" onclick="selectThumb(2,true)" style="object-fit:cover;object-position:center top" />
@@ -741,6 +776,9 @@
         <img src="img/ale5.jpg" alt="vista 5" class="img-thumb slide-thumb" onclick="selectThumb(4,true)" style="object-fit:cover;object-position:center top" />
         <img src="img/ale6.jpg" alt="vista 6" class="img-thumb slide-thumb" onclick="selectThumb(5,true)" style="object-fit:cover;object-position:center top" />
         <img src="img/ale7.jpg" alt="vista 7" class="img-thumb slide-thumb" onclick="selectThumb(6,true)" style="object-fit:cover;object-position:center top" />
+        <img src="img/ale8.jpg" alt="vista 8" class="img-thumb slide-thumb" onclick="selectThumb(7,true)" style="object-fit:cover;object-position:center top" />
+        </div>
+        <button class="thumb-arrow" onclick="scrollThumbs(1)" aria-label="Scorri destra">&#8250;</button>
       </div>
     </div>
 
@@ -932,6 +970,11 @@
 </footer>
 
 <script>
+  window.scrollThumbs = function(dir) {
+    var strip = document.getElementById('img-thumbs');
+    if (strip) strip.scrollBy({ left: dir * 80, behavior: 'smooth' });
+  };
+
   (function () {
     var thumbs = null;
     var current = 0;
