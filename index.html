@@ -999,8 +999,16 @@
       thumbs.forEach(function (t, i) {
         t.classList.toggle('active-thumb', i === idx);
       });
-      // Scroll the active thumb into view inside the strip
-      thumbs[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      // Scroll the active thumb into view inside the strip (without moving the page)
+      var strip = document.getElementById('img-thumbs');
+      if (strip) {
+        var thumb = thumbs[idx];
+        var thumbLeft = thumb.offsetLeft;
+        var thumbW = thumb.offsetWidth;
+        var stripW = strip.clientWidth;
+        var target = thumbLeft - (stripW / 2) + (thumbW / 2);
+        strip.scrollTo({ left: target, behavior: 'smooth' });
+      }
       // Reset the timer on manual click so we always wait a full 5 s after interaction
       if (userClick) {
         clearInterval(timer);
